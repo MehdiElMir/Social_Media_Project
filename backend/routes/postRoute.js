@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {cloudinary} = require("../cloudinary");
+const { cloudinary } = require("../cloudinary");
 const Post = require("../models/Post");
+const moment = require("moment");
 
 router.post("/addpost", async (req, res) => {
   try {
@@ -19,14 +20,37 @@ router.post("/addpost", async (req, res) => {
     return res.status(400).json(error);
   }
 });
-router.get("/getallposts", async(req,res)=>{
-  try{
-    const posts = await Post.find().populate('user')
-    res.send(posts)
-  }catch(error){
+router.get("/getallposts", async (req, res) => {
+  try {
+    const posts = await Post.find().populate("user");
+    res.send(posts);
+  } catch (error) {
     return res.status(400).json(error);
-
   }
-})
+});
+router.post("/likeorunlike", async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.body.postid });
+    let likes = post.likes;
 
+    if (likes.find((obj) => obj.user == req.body.userid)) {
+      const temp =likes.filter((obj) => obj.user.toString() != req.body.userid);
+      post.likes = temp;
+      await Post.updateOne({ _id: req.body.postid }, post);
+      res.send("Post unliked successfully");
+    } else {
+      likes.push({
+        user: req.body.userid,
+        date: moment().format("MMM DD yyyy"),
+      });
+      post.likes = likes;
+
+      await Post.updateOne({ _id: req.body.postid }, post);
+      res.send("Post liked successfully");
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
 module.exports = router;

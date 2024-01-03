@@ -11,7 +11,9 @@ import { useEffect } from "react";
 import { getAllPosts } from "./redux/actions/postActions";
 
 function App() {
-  const { loading } = useSelector((state) => state.alertsReducer);
+  const { loading, likeOrUnlikeLoading } = useSelector(
+    (state) => state.alertsReducer
+  );
   const isAuthenticated = !!localStorage.getItem("user");
     const dispatch = useDispatch();
   useEffect(()=>{
@@ -24,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      {loading && (
+      {(loading || likeOrUnlikeLoading) && (
         <div className="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>

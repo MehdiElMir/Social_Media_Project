@@ -5,6 +5,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { Link } from "react-router-dom";
@@ -32,6 +33,9 @@ const DefaultLayout = (props) => {
           <Menu.Item key="/addpost" icon={<UploadOutlined />}>
             <Link to="/addpost">AddPost</Link>
           </Menu.Item>
+          <Menu.Item  icon={<LogoutOutlined/>}>
+            <Link onClick={()=>{localStorage.removeItem(('user'),window.location.reload());}}>Logout</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
@@ -53,7 +57,7 @@ const DefaultLayout = (props) => {
               }}
             />
             <h2>SocialMundia</h2>
-            <h4>User Temp</h4>
+            <h4>{JSON.parse(localStorage.getItem("user")).username}</h4>
           </div>
         </Header>
         <Content

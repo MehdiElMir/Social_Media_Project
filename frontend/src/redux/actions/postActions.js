@@ -30,3 +30,18 @@ export const getAllPosts = () => async (dispatch) => {
     message.error("Something went wrong ❌");
   }
 };
+export const likeOrUnlikePost = (data) => async (dispatch) => {
+  data.userid = JSON.parse(localStorage.getItem("user"))._id;
+
+
+  dispatch({ type: "LOADING", payload: true });
+  try {
+    await axios.post("/api/posts/likeorunlike", data);
+    dispatch({ type: "LIKE_UNLIKE_LOADING", payload: false });
+  
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "LIKE_UNLIKE_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};
