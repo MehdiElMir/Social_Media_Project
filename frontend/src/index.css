@@ -25,3 +25,30 @@ code {
   text-align: center;
   z-index: 10;
 }
+.ProfilPic1{
+  padding-left: 15px;
+  padding-right: 10px;
+  font-weight: bold;
+  font-size: 20px !important;
+  background-color: grey;
+  border-radius: 50%;  
+  height: 50px;
+  width: 50px;
+  color: white !important;
+}
+img{
+border-radius: 5px !important;
+}
+.postimage{
+  height: 500px;
+  width: 100%;
+  margin-top:10px;
+}
+p{
+  color: grey;
+  margin: 5px !important;
+  font-size: 18px !important;
+}
+.anticon svg{
+  font-size: 18px !important;
+}
