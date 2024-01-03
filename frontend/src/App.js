@@ -6,11 +6,22 @@ import Addpost from "./pages/Addpost";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
+import { useEffect } from "react";
+import { getAllPosts } from "./redux/actions/postActions";
 
 function App() {
   const { loading } = useSelector((state) => state.alertsReducer);
   const isAuthenticated = !!localStorage.getItem("user");
+    const dispatch = useDispatch();
+  useEffect(()=>{
+
+  dispatch(getAllPosts())
+
+
+  },[]);
+
+
   return (
     <div className="App">
       {loading && (

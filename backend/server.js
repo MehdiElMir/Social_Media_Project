@@ -5,7 +5,7 @@ const dbConnection = require("./db");
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
 
-app.use(express.json());
+app.use(express.json({limit:'25mb'}));
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 

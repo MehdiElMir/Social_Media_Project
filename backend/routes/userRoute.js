@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
       username: req.body.username,
       password: req.body.password,
     });
-    if (user) res.status(200).send("User logged successfully");
+    if (user) res.status(200).send(user);
     else res.status(401).send("Invalid credentials");
   } catch (error) {
     console.log(error);

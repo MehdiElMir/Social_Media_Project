@@ -2,10 +2,14 @@ import React from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import { Col, Form, Input, Row, Button } from "antd";
 import { useState } from "react";
+import {useDispatch} from "react-redux";
+import { addPost } from "../redux/actions/postActions";
+
 
 const { TextArea } = Input;
 function Addpost() {
   const [image, setImage] = useState("");
+  const dispatch= useDispatch()
   function handleFileInput(e) {
     const file = e.target.files[0];
     const reader = new FileReader(file);
@@ -16,16 +20,16 @@ function Addpost() {
     };
   }
 
-  function addPost(data) {
+  function sendPost(data) {
     data.image = image;
-    console.log(data);
+    dispatch(addPost(data));
   }
 
   return (
     <DefaultLayout>
       <Row justify="center">
         <Col lg={12}>
-          <Form className="bs1 p-3 mt-5" layout="vertical" onFinish={addPost}>
+          <Form className="bs1 p-3 mt-5" layout="vertical" onFinish={sendPost}>
             <h3>Add new post</h3>
             <Form.Item
               name="description"
