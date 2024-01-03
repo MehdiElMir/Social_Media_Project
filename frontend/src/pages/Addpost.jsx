@@ -1,6 +1,7 @@
 import React from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import { Col, Form, Input, Row, Button } from "antd";
+import { useState } from "react";
 
 const { TextArea } = Input;
 function Addpost() {
