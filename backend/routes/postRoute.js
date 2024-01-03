@@ -21,7 +21,7 @@ router.post("/addpost", async (req, res) => {
 });
 router.get("/getallposts", async(req,res)=>{
   try{
-    const posts = await Post.find()
+    const posts = await Post.find().populate('user')
     res.send(posts)
   }catch(error){
     return res.status(400).json(error);
