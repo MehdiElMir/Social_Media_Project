@@ -11,7 +11,7 @@ export const userRegister = (data) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
-    message.error("Something went wrong ❌");
+    message.error("Something went wrong ❌ ");
   }
 };
 
