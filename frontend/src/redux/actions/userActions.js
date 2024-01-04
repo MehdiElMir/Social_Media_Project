@@ -46,9 +46,9 @@ export const getAllUsers = (data) => async (dispatch) => {
 export const followUser = (data) => async (dispatch) => {
   dispatch({ type: "FOLLOW_LOADING", payload: true });
   try {
-    const response = await axios.post("/api/users/followuser",data);
+    const response = await axios.post("/api/users/followuser", data);
     dispatch({ type: "FOLLOW_LOADING", payload: false });
-    message.success('Followed Successfully')
+    message.success("Followed Successfully");
   } catch (error) {
     console.log(error);
     dispatch({ type: "FOLLOW_LOADING", payload: false });
@@ -65,5 +65,20 @@ export const unfollowUser = (data) => async (dispatch) => {
     console.log(error);
     dispatch({ type: "UNFOLLOW_LOADING", payload: false });
     message.error("Something went wrong ❌");
+  }
+};
+
+export const editUser = (data) => async (dispatch) => {
+  dispatch({ type: "LOADING", payload: true });
+  try {
+    const response = await axios.post("/api/users/edit", data);
+    dispatch({ type: "LOADING", payload: false });
+    message.success("User profile updated successfully ✅");
+    localStorage.setItem("user", JSON.stringify(response.data));
+    window.location.href = `profile/${response.data._id}`;
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "LOADING", payload: false });
+    message.error("Something went wrong ❌ ");
   }
 };

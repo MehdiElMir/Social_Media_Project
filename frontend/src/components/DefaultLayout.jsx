@@ -15,6 +15,7 @@ const DefaultLayout = (props) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -28,7 +29,7 @@ const DefaultLayout = (props) => {
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item key="/profile" icon={<VideoCameraOutlined />}>
-            <Link to="/profile">Profile</Link>
+            <Link to={`/profile/${user._id}`}>Profile</Link>
           </Menu.Item>
           <Menu.Item key="/allusers" icon={<UserOutlined />}>
             <Link to="/allusers">All users</Link>

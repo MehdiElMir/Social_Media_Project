@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const { cloudinary } = require("../cloudinary");
 
 router.post("/register", async (req, res) => {
   try {
@@ -48,7 +49,7 @@ router.post("/followuser", async (req, res) => {
     await User.updateOne({ _id: currentuserid }, currentuser);
     let receiveruser = await User.findOne({ _id: receiveruserid });
     let receiverUserFollowers = receiveruser.followers;
-    receiverUserFollowers.push( currentuserid );
+    receiverUserFollowers.push(currentuserid);
 
     receiveruser.followers = receiverUserFollowers;
     await User.updateOne({ _id: receiveruserid }, receiveruser);
@@ -64,7 +65,9 @@ router.post("/unfollowuser", async (req, res) => {
   try {
     let currentuser = await User.findOne({ _id: currentuserid });
     let currentUserFollowing = currentuser.following;
-    const temp1 = currentUserFollowing.filter(obj=>obj.toString()!==receiveruserid);
+    const temp1 = currentUserFollowing.filter(
+      (obj) => obj.toString() !== receiveruserid
+    );
     currentuser.following = temp1;
 
     await User.updateOne({ _id: currentuserid }, currentuser);
@@ -80,6 +83,34 @@ router.post("/unfollowuser", async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
+  }
+});
+
+router.post("/edit", async (req, res) => {
+  try {
+    let prevUser = await User.findOne({ _id: req.body._id });
+    if (prevUser.profilePicUrl == req.body.profilePicUrl) {
+      await User.updateOne({ _id: req.body._id }, req.body);
+      const user = await User.findOne({ _id: req.body._id });
+      res.send(user);
+    } else {
+      const uploadResponse = await cloudinary.v2.uploader.upload(
+        req.body.profilePicUrl,
+        {
+          folder: "SocialMundia",
+          use_filename: true,
+        }
+      );
+
+      req.body.profilePicUrl = uploadResponse.url;
+
+      await User.updateOne({ _id: req.body._id }, req.body);
+      const user = await User.findOne({ _id: req.body._id });
+      res.send(user);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
   }
 });
 

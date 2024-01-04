@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllPosts } from "./redux/actions/postActions";
 import { getAllUsers } from "./redux/actions/userActions";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const { loading, likeOrUnlikeLoading } = useSelector(
@@ -44,7 +45,7 @@ function App() {
             }
           />
           <Route
-            path="/profile"
+            path="/profile/:userid"
             element={
               <Protected isLoggedIn={isAuthenticated}>
                 <Profile></Profile>
@@ -64,6 +65,14 @@ function App() {
             element={
               <Protected isLoggedIn={isAuthenticated}>
                 <AllUsers></AllUsers>
+              </Protected>
+            }
+          />
+          <Route
+            path="/editprofile"
+            element={
+              <Protected isLoggedIn={isAuthenticated}>
+                <EditProfile></EditProfile>
               </Protected>
             }
           />

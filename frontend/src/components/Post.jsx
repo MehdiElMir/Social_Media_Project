@@ -39,9 +39,16 @@ function Post({ post }) {
               {post.user.username[0]}
             </span>
           ) : (
-            <span>{post.user.profilePicUrl}</span>
+            <img
+              src={post.user.profilePicUrl}
+              height="35"
+              width="35"
+              style={{ borderRadius: "50%", objectFit: "cover" }}
+            />
           )}
-          <Link className="ms-2">{post.user.username}</Link>
+          <div>
+            <Link className="ms-2">{post.user.username}</Link>
+          </div>
         </div>
         <div>
           <p>{moment(post.createdAt).format("MMM DD yyyy")}</p>
@@ -106,7 +113,9 @@ function Post({ post }) {
                         {user.username[0]}
                       </span>
                     ) : (
-                      user && <img src={user.profilePicUrl} />
+                      user && (
+                        <img height="50" width="50" src={user.profilePicUrl} />
+                      )
                     )}
                     {user && <Link className="ms-2">{user.username}</Link>}
                     <p className="ms-3" style={{ fontSize: 15 }}>
