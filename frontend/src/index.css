@@ -25,30 +25,30 @@ code {
   text-align: center;
   z-index: 10;
 }
-.ProfilPic1{
+.ProfilPic1 {
   padding-left: 15px;
   padding-right: 10px;
   font-weight: bold;
   font-size: 20px !important;
   background-color: grey;
-  border-radius: 50%;  
-  height: 50px;
-  width: 50px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
   color: white !important;
 }
-img{
-border-radius: 5px !important;
+img {
+  border-radius: 5px !important;
 }
-.postimage{
+.postimage {
   height: 500px;
   width: 100%;
-  margin-top:10px;
+  margin-top: 10px;
 }
-p{
+p {
   color: grey;
   margin: 5px !important;
-  font-size: 18px !important;
+  font-size: 18px;
 }
-.anticon svg{
+.anticon svg {
   font-size: 18px !important;
 }

@@ -33,15 +33,27 @@ export const getAllPosts = () => async (dispatch) => {
 export const likeOrUnlikePost = (data) => async (dispatch) => {
   data.userid = JSON.parse(localStorage.getItem("user"))._id;
 
-
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: "LIKE_UNLIKE_LOADING", payload: true });
   try {
     await axios.post("/api/posts/likeorunlike", data);
     dispatch({ type: "LIKE_UNLIKE_LOADING", payload: false });
-  
   } catch (error) {
     console.log(error);
     dispatch({ type: "LIKE_UNLIKE_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};
+
+export const addComment = (data) => async (dispatch) => {
+  data.userid = JSON.parse(localStorage.getItem("user"))._id;
+
+  dispatch({ type: "ADD_COMMENT_LOADING", payload: true });
+  try {
+    await axios.post("/api/posts/addcomment", data);
+    dispatch({ type: "ADD_COMMENT_LOADING", payload: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "ADD_COMMENT_LOADING", payload: false });
     message.error("Something went wrong ❌");
   }
 };
