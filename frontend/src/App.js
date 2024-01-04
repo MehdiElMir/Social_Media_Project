@@ -6,6 +6,7 @@ import Addpost from "./pages/Addpost";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AllUsers from "./pages/AllUsers";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllPosts } from "./redux/actions/postActions";
@@ -55,6 +56,14 @@ function App() {
             element={
               <Protected isLoggedIn={isAuthenticated}>
                 <Addpost></Addpost>
+              </Protected>
+            }
+          />
+          <Route
+            path="/allusers"
+            element={
+              <Protected isLoggedIn={isAuthenticated}>
+                <AllUsers></AllUsers>
               </Protected>
             }
           />

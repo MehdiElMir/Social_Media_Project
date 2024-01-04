@@ -43,3 +43,27 @@ export const getAllUsers = (data) => async (dispatch) => {
     message.error("Something went wrong ❌");
   }
 };
+export const followUser = (data) => async (dispatch) => {
+  dispatch({ type: "FOLLOW_LOADING", payload: true });
+  try {
+    const response = await axios.post("/api/users/followuser",data);
+    dispatch({ type: "FOLLOW_LOADING", payload: false });
+    message.success('Followed Successfully')
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "FOLLOW_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};
+export const unfollowUser = (data) => async (dispatch) => {
+  dispatch({ type: "UNFOLLOW_LOADING", payload: true });
+  try {
+    const response = await axios.post("/api/users/unfollowuser", data);
+    dispatch({ type: "UNFOLLOW_LOADING", payload: false });
+    message.success("UnFollowed Successfully");
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "UNFOLLOW_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};

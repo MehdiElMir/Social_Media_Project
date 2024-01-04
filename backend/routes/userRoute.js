@@ -37,4 +37,50 @@ router.get("/getallusers", async (req, res) => {
   }
 });
 
+router.post("/followuser", async (req, res) => {
+  const { currentuserid, receiveruserid } = req.body;
+  try {
+    let currentuser = await User.findOne({ _id: currentuserid });
+    let currentUserFollowing = currentuser.following;
+    currentUserFollowing.push(receiveruserid);
+    currentuser.following = currentUserFollowing;
+
+    await User.updateOne({ _id: currentuserid }, currentuser);
+    let receiveruser = await User.findOne({ _id: receiveruserid });
+    let receiverUserFollowers = receiveruser.followers;
+    receiverUserFollowers.push( currentuserid );
+
+    receiveruser.followers = receiverUserFollowers;
+    await User.updateOne({ _id: receiveruserid }, receiveruser);
+    res.send("Followed succesfully");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
+
+router.post("/unfollowuser", async (req, res) => {
+  const { currentuserid, receiveruserid } = req.body;
+  try {
+    let currentuser = await User.findOne({ _id: currentuserid });
+    let currentUserFollowing = currentuser.following;
+    const temp1 = currentUserFollowing.filter(obj=>obj.toString()!==receiveruserid);
+    currentuser.following = temp1;
+
+    await User.updateOne({ _id: currentuserid }, currentuser);
+    let receiveruser = await User.findOne({ _id: receiveruserid });
+    let receiverUserFollowers = receiveruser.followers;
+    const temp2 = receiverUserFollowers.filter(
+      (obj) => obj.toString() !== currentuserid
+    );
+
+    receiveruser.followers = temp2;
+    await User.updateOne({ _id: receiveruserid }, receiveruser);
+    res.send("Unfollowed succesfully");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
+
 module.exports = router;

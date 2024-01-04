@@ -30,11 +30,21 @@ const DefaultLayout = (props) => {
           <Menu.Item key="/profile" icon={<VideoCameraOutlined />}>
             <Link to="/profile">Profile</Link>
           </Menu.Item>
+          <Menu.Item key="/allusers" icon={<UserOutlined />}>
+            <Link to="/allusers">All users</Link>
+          </Menu.Item>
           <Menu.Item key="/addpost" icon={<UploadOutlined />}>
             <Link to="/addpost">AddPost</Link>
           </Menu.Item>
-          <Menu.Item  icon={<LogoutOutlined/>}>
-            <Link onClick={()=>{localStorage.removeItem(('user'),window.location.reload());}}>Logout</Link>
+
+          <Menu.Item icon={<LogoutOutlined />}>
+            <Link
+              onClick={() => {
+                localStorage.removeItem("user", window.location.reload());
+              }}
+            >
+              Logout
+            </Link>
           </Menu.Item>
         </Menu>
       </Sider>
