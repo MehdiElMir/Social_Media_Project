@@ -61,6 +61,11 @@ function AllUsers() {
                           <img
                             height="60"
                             width="60"
+                            style={{
+                              display: "block",
+                              borderRadius: "50%",
+                              objectFit: "cover",
+                            }}
                             src={user.profilePicUrl}
                             alt=""
                           />

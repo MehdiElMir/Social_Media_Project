@@ -8,7 +8,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const DefaultLayout = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,24 +18,29 @@ const DefaultLayout = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        style={{ backgroundColor: "#00bd97" }}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
+          style={{ backgroundColor: "#00bd97" }}
           mode="inline"
           defaultSelectedKeys={[window.location.pathname]}
         >
           <Menu.Item key="/" icon={<UserOutlined />}>
-            <Link to="/">Home</Link>
+            <NavLink to="/">Home</NavLink>
           </Menu.Item>
           <Menu.Item key="/profile" icon={<VideoCameraOutlined />}>
-            <Link to={`/profile/${user._id}`}>Profile</Link>
+            <NavLink to={`/profile/${user._id}`}>Profile</NavLink>
           </Menu.Item>
           <Menu.Item key="/allusers" icon={<UserOutlined />}>
-            <Link to="/allusers">All users</Link>
+            <NavLink to="/allusers">All users</NavLink>
           </Menu.Item>
           <Menu.Item key="/addpost" icon={<UploadOutlined />}>
-            <Link to="/addpost">AddPost</Link>
+            <NavLink to="/addpost">AddPost</NavLink>
           </Menu.Item>
 
           <Menu.Item icon={<LogoutOutlined />}>
@@ -67,7 +72,14 @@ const DefaultLayout = (props) => {
                 height: 64,
               }}
             />
-            <h2>SocialMundia</h2>
+            <h2
+              style={{
+                fontFamily: "'Maiden Orange', serif",
+                color: "#00bd97",
+              }}
+            >
+              SocialMundia
+            </h2>
             <h4>{JSON.parse(localStorage.getItem("user")).username}</h4>
           </div>
         </Header>
