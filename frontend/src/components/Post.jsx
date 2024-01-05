@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Col, Modal, Row, Input } from "antd";
 
-function Post({ post,postInProfile }) {
+function Post({ post,postInProfilePage }) {
   const { TextArea } = Input;
   const dispatch = useDispatch();
   const currentuser = JSON.parse(localStorage.getItem("user"));
@@ -55,8 +55,9 @@ function Post({ post,postInProfile }) {
         </div>
       </div>
       <img
+      style={{height:postInProfile?'200px':'500px'}}
         src={post.image}
-        className={postInProfile ? 'postinprofile' : 'postimage'}
+        
       />
       <p className="mt-1 mb-1 text-start">{post.description}</p>
       <div className="d-flex align-items-center">
