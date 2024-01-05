@@ -11,6 +11,7 @@ export const addPost = (data) => async (dispatch) => {
     await axios.post("/api/posts/addpost", data);
     dispatch({ type: "LOADING", payload: false });
     message.success("Post Added successfully ✅");
+    window.location.href="/"
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
@@ -57,3 +58,31 @@ export const addComment = (data) => async (dispatch) => {
     message.error("Something went wrong ❌");
   }
 };
+export const editPost = (data) => async (dispatch) => {
+  console.log(data)
+  dispatch({ type: "EDIT_POST_LOADING", payload: true });
+  try {
+    await axios.post("/api/posts/editpost", data);
+    dispatch({ type: "EDIT_POST_LOADING", payload: false });
+    message.success("Post updated successfully ✅");
+
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "EDIT_POST_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};
+export const deletePost = (data) => async (dispatch) => {
+  console.log(data);
+  dispatch({ type: "DELETE_POST_LOADING", payload: true });
+  try {
+    await axios.post("/api/posts/deletepost", data);
+    dispatch({ type: "DELETE_POST_LOADING", payload: false });
+    message.success("Post deleted successfully ✅");
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "DELETE_POST_LOADING", payload: false });
+    message.error("Something went wrong ❌");
+  }
+};
+

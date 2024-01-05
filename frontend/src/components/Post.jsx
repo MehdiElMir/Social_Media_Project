@@ -9,8 +9,11 @@ import {
 } from "@ant-design/icons";
 import {
   addComment,
+  deletePost,
+  editPost,
   getAllPosts,
   likeOrUnlikePost,
+  
 } from "../redux/actions/postActions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -20,21 +23,32 @@ import { Col, Modal, Row, Input } from "antd";
 function Post({ post, postInProfilePage }) {
   const { TextArea } = Input;
   const dispatch = useDispatch();
+  const [description, setDescription] = useState(post.description);
   const currentuser = JSON.parse(localStorage.getItem("user"));
   const alreadyLiked = post.likes.find(
     (obj) => obj.user.toString() == currentuser._id
   );
 
-  const { likeOrUnlikeLoading, addCommentLoading } = useSelector(
-    (state) => state.alertsReducer
-  );
+  const {
+    likeOrUnlikeLoading,
+    addCommentLoading,
+    editPostLoading,
+    deletePostLoading,
+  } = useSelector((state) => state.alertsReducer);
   const [commentModalVisibility, setCommentModalVisibility] = useState(false);
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
+
   const [comment, setComment] = useState("");
   const { users } = useSelector((state) => state.usersReducer);
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [likeOrUnlikeLoading, addCommentLoading]);
+  }, [
+    likeOrUnlikeLoading,
+    addCommentLoading,
+    editPostLoading,
+    deletePostLoading,
+  ]);
   return (
     <div className="bs1 p-2 mb-3 mt-3">
       <div className="d-flex justify-content-between align-items-center">
@@ -88,10 +102,16 @@ function Post({ post, postInProfilePage }) {
         {post.user._id == currentuser._id && postInProfilePage == true && (
           <>
             <div>
-              <DeleteOutlined />
+              <DeleteOutlined onClick={()=>{
+                dispatch(deletePost({_id:post._id}))
+              }} />
             </div>
             <div>
-              <EditOutlined />
+              <EditOutlined
+                onClick={() => {
+                  setEditModalVisibility(true);
+                }}
+              />
             </div>
           </>
         )}
@@ -157,6 +177,26 @@ function Post({ post, postInProfilePage }) {
             })}
           </Col>
         </Row>
+      </Modal>
+      <Modal
+        onCancel={() => {
+          setEditModalVisibility(false);
+        }}
+        title="Edit description"
+        closable={false}
+        onOk={() => {
+        dispatch(editPost({_id:post._id, description:description}))
+        setEditModalVisibility(false)
+        }}
+        visible={editModalVisibility}
+        okText="edit"
+      >
+        <Input
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
       </Modal>
     </div>
   );
