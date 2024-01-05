@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Col, Modal, Row, Input } from "antd";
 
-function Post({ post }) {
+function Post({ post,postInProfile }) {
   const { TextArea } = Input;
   const dispatch = useDispatch();
   const currentuser = JSON.parse(localStorage.getItem("user"));
@@ -54,7 +54,10 @@ function Post({ post }) {
           <p>{moment(post.createdAt).format("MMM DD yyyy")}</p>
         </div>
       </div>
-      <img src={post.image} className="postimage" />
+      <img
+        src={post.image}
+        className={postInProfile ? 'postinprofile' : 'postimage'}
+      />
       <p className="mt-1 mb-1 text-start">{post.description}</p>
       <div className="d-flex align-items-center">
         <div className="d-flex align-items-center ms-3">
