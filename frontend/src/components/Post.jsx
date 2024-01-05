@@ -36,7 +36,7 @@ function Post({ post, postInProfilePage }) {
     dispatch(getAllPosts());
   }, [likeOrUnlikeLoading, addCommentLoading]);
   return (
-    <div className="bs1 p-2 mb-3">
+    <div className="bs1 p-2 mb-3 mt-3">
       <div className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center ">
           {post.user.profilePicUrl == "" ? (
@@ -85,7 +85,7 @@ function Post({ post, postInProfilePage }) {
           <CommentOutlined onClick={() => setCommentModalVisibility(true)} />
           <p>{post.comments.length}</p>
         </div>
-        {post.user._id == currentuser._id && (
+        {post.user._id == currentuser._id && postInProfilePage == true && (
           <>
             <div>
               <DeleteOutlined />

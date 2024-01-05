@@ -4,8 +4,7 @@ import { Button, Col, Row } from "antd";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-import Post from "../components/Post"
-
+import Post from "../components/Post";
 
 function Profile() {
   const { userid } = useParams();
@@ -13,7 +12,7 @@ function Profile() {
   const { posts } = useSelector((state) => state.postsReducer);
   const user = users.find((obj) => obj._id == userid);
   const userposts = posts.filter((obj) => obj.user._id == userid);
-  const currentuser = localStorage.getItem("user");
+  const currentuser = JSON.parse(localStorage.getItem("user"));
   return (
     <DefaultLayout>
       {users.length > 0 && (
@@ -62,15 +61,21 @@ function Profile() {
               </div>
             </Col>
           </Row>
-          <Row>
-            {userposts.map((post) => {
-              return (
-                <Col lg={5} sm={24} xs={24}>
-                  <Post post={post} postInProfilePage={true} />
-                </Col>
-              );
-            })}
-          </Row>
+          {user.followers.find((obj) => obj == currentuser._id) ||
+          user.privateAccount == false ||
+          user._id == currentuser._id ? (
+            <Row gutter={16} justify="center">
+              {userposts.map((post) => {
+                return (
+                  <Col lg={5} sm={24} xs={24}>
+                    <Post post={post} postInProfilePage={true} />
+                  </Col>
+                );
+              })}
+            </Row>
+          ) : (
+            <p>This account is private</p>
+          )}
         </>
       )}
     </DefaultLayout>
