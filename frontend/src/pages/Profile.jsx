@@ -8,6 +8,7 @@ import moment from "moment";
 import Post from "../components/Post";
 
 function Profile() {
+  
   const { userid } = useParams();
   const { users } = useSelector((state) => state.usersReducer);
   const { posts } = useSelector((state) => state.postsReducer);
